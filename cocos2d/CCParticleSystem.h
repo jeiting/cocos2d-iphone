@@ -390,6 +390,13 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  @since v0.8
  */
 @property (nonatomic,readwrite) tCCPositionType positionType;
+
+/** particles free mode reference coordinate system. 
+ @since v0.8
+ */
+
+@property (nonatomic,assign) CCNode *positionReference;
+
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8

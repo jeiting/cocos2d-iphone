@@ -75,8 +75,10 @@
 @synthesize endSize, endSizeVar;
 @synthesize blendFunc = blendFunc_;
 @synthesize positionType = positionType_;
+@synthesize positionReference = positionReference_;
 @synthesize autoRemoveOnFinish = autoRemoveOnFinish_;
 @synthesize emitterMode = emitterMode_;
+
 
 
 +(id) particleWithFile:(NSString*) plistFile
@@ -395,6 +397,9 @@
 	// position
 	if( positionType_ == kCCPositionTypeFree ) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
+        if (self.positionReference) {
+            p = [self.positionReference convertToNodeSpace:p];
+        }
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
 	}
 	else if( positionType_ == kCCPositionTypeRelative ) {
@@ -494,6 +499,11 @@
 	CGPoint currentPosition = CGPointZero;
 	if( positionType_ == kCCPositionTypeFree ) {
 		currentPosition = [self convertToWorldSpace:CGPointZero];
+        
+        if (self.positionReference) {
+            currentPosition = [self.positionReference convertToNodeSpace:currentPosition];
+        }
+        
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
 	}
